@@ -1,4 +1,4 @@
-FROM quay.io/prometheus/golang-builder as builder
+FROM quay.io/prometheus/golang-builder:1.12.1-base as builder
 
 ADD .   /go/src/github.com/justwatchcom/sql_exporter
 WORKDIR /go/src/github.com/justwatchcom/sql_exporter
