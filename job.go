@@ -52,7 +52,7 @@ func (j *Job) Init(logger log.Logger, queries map[string]string) error {
 			q.metrics = make(map[*connection][]prometheus.Metric, len(j.Queries))
 		}
 		// try to satisfy prometheus naming restrictions
-		name := MetricNameRE.ReplaceAllString("sql_"+q.Name, "")
+		name := q.Name
 		help := q.Help
 		// prepare a new metrics descriptor
 		//
