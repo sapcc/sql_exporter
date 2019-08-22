@@ -49,8 +49,9 @@ func (j *Job) Init(logger log.Logger, queries map[string]string) error {
 			// after the each round of collection this will be resized as necessary.
 			q.metrics = make(map[*connection][]prometheus.Metric, len(j.Queries))
 		}
-		// try to satisfy prometheus naming restrictions
-		name := q.Name
+		// try to make metrics format exactly as produced by pgmetrics
+                vals := strings.Join(q.Values,"")
+		name := q.Name + "_" + vals
 		help := q.Help
 		// prepare a new metrics descriptor
 		//
