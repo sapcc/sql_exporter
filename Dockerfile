@@ -1,4 +1,4 @@
-FROM golang:1.20-alpine as builder
+FROM golang:1.20.14-alpine3.18 as builder
 
 RUN apk add git bash
 
@@ -6,6 +6,8 @@ ENV GO111MODULE=on
 
 # Add our code
 COPY ./ /src
+
+LABEL source_repository="https://github.com/sapcc/sql_exporter"
 
 # build
 WORKDIR /src
