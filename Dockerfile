@@ -1,4 +1,4 @@
-FROM golang:1.21-alpine AS builder
+FROM golang:1.21.13-alpine3.20 AS builder
 
 RUN apk add git bash
 
@@ -13,6 +13,8 @@ RUN GOGC=off go build -mod=vendor -v -o /sql_exporter .
 
 # multistage
 FROM alpine:3.21.0
+
+LABEL source_repository="https://github.com/sapcc/sql_exporter"
 
 RUN apk --update upgrade && \
     apk add curl ca-certificates && \
