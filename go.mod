@@ -1,4 +1,4 @@
-module github.com/justwatchcom/sql_exporter
+module github.com/sapcc/sql_exporter
 
 go 1.24
 
