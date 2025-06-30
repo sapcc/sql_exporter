@@ -16,8 +16,9 @@ pkgs   = $(shell $(GO) list ./... | grep -v /vendor/)
 
 PREFIX              ?= $(shell pwd)
 BIN_DIR             ?= $(shell pwd)
-DOCKER_IMAGE_NAME   ?= sql-exporter
-DOCKER_IMAGE_TAG    ?= $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
+DOCKER_IMAGE_NAME   ?= keppel.eu-de-1.cloud.sap/ccloud/sql-exporter
+DOCKER_IMAGE_TAG    ?= $(shell git describe --tags --exact-match)
+# DOCKER_IMAGE_TAG    ?= $(subst /,-,$(shell git rev-parse --abbrev-ref HEAD))
 
 
 all: format build test
@@ -45,5 +46,11 @@ build:
 docker:
 	@echo ">> building docker image"
 	@docker build -t "$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)" .
+	@docker tag "$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)" "$(DOCKER_IMAGE_NAME):latest"
 
-.PHONY: all style format build test vet docker
+push:
+	@docker push "$(DOCKER_IMAGE_NAME):$(DOCKER_IMAGE_TAG)"
+	@docker push "$(DOCKER_IMAGE_NAME):latest"
+
+
+.PHONY: all style format build test vet docker push
